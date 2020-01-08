@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面关键字搜索</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .form-pad {
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">关键字搜索</a>
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>欢迎</h1>
+        <p>希望您能愉快方便的使用页面关键字搜索</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">更多</a></p>
+    </div>
+
+    <div class="row form-pad">
+        <div class="col-md-6">
+            <div class="input-group">
+            <span class="input-group-addon"
+                  id="basic-addon1">第二页的网页地址</span>
+                <input type="text" class="form-control url1"
+                       aria-describedby="basic-addon1"
+                       placeholder="http://test.com/page/2.html">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group">
+            <span class="input-group-addon"
+                  id="basic-addon1">第三页的网页地址</span>
+                <input type="text" class="form-control url2"
+                       aria-describedby="basic-addon1"
+                       placeholder="http://test.com/page/3.html">
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-pad">
+
+    </div>
+
+    <div class="row form-pad">
+        <div class="col-md-6">
+            <div class="input-group">
+            <span class="input-group-addon"
+                  id="basic-addon1">搜索的关键字？</span>
+                <input type="text" class="form-control keyword"
+                       aria-describedby="basic-addon1" placeholder="新闻">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group">
+            <span class="input-group-addon"
+                  id="basic-addon1">搜索多少页？</span>
+                <input type="text" class="form-control search_page"
+                       aria-describedby="basic-addon1" placeholder="10">
+            </div>
+        </div>
+    </div>
+
+    <div class="row form-pad">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary btn-lg start_search">
+                开始搜索
+            </button>
+        </div>
+    </div>
+
+    <div class="row form-pad resp">
+
+    </div>
+</div>
+
+<script src="/static/js/jquery-3.4.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".start_search").click(function () {
+            url1 = $('.url1').val();
+            url2 = $('.url2').val();
+            keyword = $('.keyword').val();
+            search_page = $('.search_page').val();
+
+            $.ajax({
+                url: "/search",
+                type: "POST",
+                data: {
+                    "url1": url1,
+                    "url2": url2,
+                    "keyword": keyword,
+                    "search_page": search_page
+                },
+                dataType: 'json',
+            }).done(function (res) {
+                console.log(res)
+            });
+
+        });
+    });
+</script>
+</body>
+</html>
