@@ -93,8 +93,10 @@
         </div>
     </div>
 
-    <div class="row form-pad resp">
+    <div class="row form-pad list-group">
+        <div class="col-md-10 resp">
 
+        </div>
     </div>
 </div>
 
@@ -119,7 +121,10 @@
                 },
                 dataType: 'json',
             }).done(function (res) {
-                console.log(res)
+                for (i = 0; i < res.length; i++) {
+                    resData = "<a class='list-group-item' href='" + res[i]["url"] + "' target='_blank'>" + res[i]["title"] + "</a>";
+                    $('.resp').append(resData)
+                }
             });
 
         });
