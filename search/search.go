@@ -8,6 +8,17 @@ import (
 	"sync"
 )
 
+var MAX_SEARCH_PAGE = 30
+
+type CT_KSearchData struct {
+	Url   string `json:"url"`
+	Title string `json:"title"`
+}
+
+func NewCT_KSearchData() *CT_KSearchData {
+	return &CT_KSearchData{}
+}
+
 type CT_Ksearch struct {
 	//第二页与第三页的地址
 	Page2Url string
@@ -31,16 +42,16 @@ func NewCT_Ksearch() *CT_Ksearch {
 }
 
 // 搜索数据
-func (k *CT_Ksearch) Search() {
+func (k *CT_Ksearch) Search() error {
 	//验证参数
 	if err := k.validateParams(); err != nil {
-		log.Panicf("参数验证有误,err=%s。", err)
+		return err
 	}
 
 	//读取模板
 	urlTmp, err := k.readUrlTmp()
 	if err != nil {
-		log.Panicf("读取模板失败,err=%s。", err)
+		return err
 	}
 
 	//开始搜索
@@ -54,12 +65,14 @@ func (k *CT_Ksearch) Search() {
 			defer wg.Done()
 
 			if err := k.readUrlData(url); err != nil {
-				log.Panicf("读取数据失败,err=%s。", err)
+				log.Printf("读取数据失败,err=%s。", err)
 			}
 		}(realUrl)
 	}
 
 	wg.Wait()
+
+	return nil
 }
 
 //根据第二页和第三页，找到此地址的分页模板
@@ -141,8 +154,8 @@ func (k *CT_Ksearch) validateParams() error {
 		k.SearchPage = 10
 	}
 
-	if k.SearchPage > 20 {
-		return NewKsError(2, "最大支持一次性搜索20页的数据。")
+	if k.SearchPage > MAX_SEARCH_PAGE {
+		return NewKsError(2, fmt.Sprintf("最大支持一次性搜索%d页的数据。", MAX_SEARCH_PAGE))
 	}
 
 	k.Page2Url = strings.Trim(k.Page2Url, " ")
