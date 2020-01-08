@@ -11,6 +11,10 @@
         .form-pad {
             padding-bottom: 10px;
         }
+
+        .resp{
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -46,7 +50,7 @@
                   id="basic-addon1">第二页的网页地址</span>
                 <input type="text" class="form-control url1"
                        aria-describedby="basic-addon1"
-                       placeholder="http://test.com/page/2.html">
+                       placeholder="http://www.deyi.com/forum-912-2.html">
             </div>
         </div>
 
@@ -56,31 +60,39 @@
                   id="basic-addon1">第三页的网页地址</span>
                 <input type="text" class="form-control url2"
                        aria-describedby="basic-addon1"
-                       placeholder="http://test.com/page/3.html">
+                       placeholder="http://www.deyi.com/forum-912-3.html">
             </div>
         </div>
     </div>
 
     <div class="row form-pad">
+        <div class="col-md-6">
+            <div class="input-group">
+            <span class="input-group-addon"
+                  id="basic-addon1">从多少页？</span>
+                <input type="text" class="form-control start_page"
+                       aria-describedby="basic-addon1" placeholder="默认第一页">
+            </div>
+        </div>
 
+
+        <div class="col-md-6">
+            <div class="input-group">
+            <span class="input-group-addon"
+                  id="basic-addon1">到多少页？</span>
+                <input type="text" class="form-control end_page"
+                       aria-describedby="basic-addon1" placeholder="默认第二页">
+            </div>
+        </div>
     </div>
 
     <div class="row form-pad">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="input-group">
             <span class="input-group-addon"
                   id="basic-addon1">搜索的关键字？</span>
                 <input type="text" class="form-control keyword"
                        aria-describedby="basic-addon1" placeholder="新闻">
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div class="input-group">
-            <span class="input-group-addon"
-                  id="basic-addon1">搜索多少页？</span>
-                <input type="text" class="form-control search_page"
-                       aria-describedby="basic-addon1" placeholder="10">
             </div>
         </div>
     </div>
@@ -93,9 +105,15 @@
         </div>
     </div>
 
-    <div class="row form-pad list-group">
-        <div class="col-md-10 resp">
 
+    <div class="panel panel-success">
+        <div class="panel-heading">搜索结果</div>
+        <div class="panel-body">
+            <div class="row form-pad list-group">
+                <div class="col-md-10 resp">
+                    暂无数据
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -108,8 +126,10 @@
             url1 = $('.url1').val();
             url2 = $('.url2').val();
             keyword = $('.keyword').val();
-            search_page = $('.search_page').val();
+            start_page = $('.start_page').val();
+            end_page = $('.end_page').val();
 
+            $('.resp').html("搜索中，请稍后......");
             $.ajax({
                 url: "/search",
                 type: "POST",
@@ -117,13 +137,21 @@
                     "url1": url1,
                     "url2": url2,
                     "keyword": keyword,
-                    "search_page": search_page
+                    "start_page": start_page,
+                    "end_page": end_page,
                 },
                 dataType: 'json',
             }).done(function (res) {
-                for (i = 0; i < res.length; i++) {
-                    resData = "<a class='list-group-item' href='" + res[i]["url"] + "' target='_blank'>" + res[i]["title"] + "</a>";
-                    $('.resp').append(resData)
+                $('.resp').html("");
+
+                if (res == null) {
+                    $('.resp').append("暂无数据")
+                } else {
+                    for (var i = 0; i < res.length; i++) {
+                        n = i + 1;
+                        resData = "<a class='list-group-item' href='" + res[i]["url"] + "' target='_blank'>" + n + ". " + res[i]["title"] + "</a>";
+                        $('.resp').append(resData)
+                    }
                 }
             });
 

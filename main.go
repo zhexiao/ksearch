@@ -12,7 +12,6 @@ func main() {
 	//ks := search.NewCT_Ksearch()
 	//ks.Page2Url = "http://www.deyi.com/forum-912-2.html"
 	//ks.Page3Url = "http://www.deyi.com/forum-912-3.html"
-	//ks.SearchPage = 30
 	//ks.Keyword = "光谷东"
 
 	router := gin.Default()
@@ -26,14 +25,18 @@ func main() {
 		url1 := c.PostForm("url1")
 		url2 := c.PostForm("url2")
 		keyword := c.PostForm("keyword")
-		searchPage := c.PostForm("search_page")
+		startPageStr := c.PostForm("start_page")
+		endPageStr := c.PostForm("end_page")
 
-		page, _ := strconv.Atoi(searchPage)
+		startPage, _ := strconv.Atoi(startPageStr)
+		endPage, _ := strconv.Atoi(endPageStr)
+
 		ks := search.CT_Ksearch{
-			Page2Url:   url1,
-			Page3Url:   url2,
-			Keyword:    keyword,
-			SearchPage: page,
+			Page2Url:  url1,
+			Page3Url:  url2,
+			Keyword:   keyword,
+			StartPage: startPage,
+			EndPage:   endPage,
 		}
 
 		//搜索

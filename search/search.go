@@ -27,8 +27,11 @@ type CT_Ksearch struct {
 	//搜索的关键字
 	Keyword string
 
-	//最大支持搜索的页数和需要搜索的页数
-	SearchPage int
+	//搜索开始页和结束页
+	StartPage int
+	EndPage   int
+	//得到需要搜索多少页
+	countPage int
 
 	//存储的数据
 	Data []*CT_KSearchData
@@ -56,7 +59,7 @@ func (k *CT_Ksearch) Search() error {
 
 	//开始搜索
 	var wg sync.WaitGroup
-	for i := 1; i < k.SearchPage; i++ {
+	for i := 1; i < k.countPage; i++ {
 		wg.Add(1)
 
 		//生成真实的搜索地址
@@ -150,11 +153,20 @@ func (k *CT_Ksearch) saveData(url string, title string) {
 //验证搜索参数是否合法
 func (k *CT_Ksearch) validateParams() error {
 	//验证搜索的页数
-	if k.SearchPage <= 0 {
-		k.SearchPage = 10
+	if k.StartPage <= 0 {
+		k.StartPage = 1
 	}
 
-	if k.SearchPage > MAX_SEARCH_PAGE {
+	if k.EndPage <= 0 {
+		k.EndPage = 2
+	}
+
+	if k.EndPage < k.StartPage {
+		return NewKsError(2, fmt.Sprintf("结束页必须大于开始页"))
+	}
+
+	k.countPage = k.EndPage - k.StartPage
+	if k.countPage > MAX_SEARCH_PAGE {
 		return NewKsError(2, fmt.Sprintf("最大支持一次性搜索%d页的数据。", MAX_SEARCH_PAGE))
 	}
 
