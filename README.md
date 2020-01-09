@@ -3,6 +3,13 @@
 
 ## 使用方式
 
+#### 第一步：下载windows程序
+![ksearch.exe](https://github.com/zhexiao/ksearch/releases/download/v1/ksearch.exe)
+
+#### 第二部：双击程序，打开程序
+
+
+
 #### 第一步：填入搜索数据
 ![image](https://raw.githubusercontent.com/zhexiao/ksearch/master/_example/1.png)
 
