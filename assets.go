@@ -10,19 +10,19 @@ var _Assets66d3a3aad4d8bedc2fbcda627368d58b800ec039 = "<!DOCTYPE html>\r\n<html 
 
 // Assets returns go-assets FileSystem
 var Assets = assets.NewFileSystem(map[string][]string{"/": []string{"static"}, "/static": []string{"search.html"}}, map[string]*assets.File{
-	"/static/search.html": &assets.File{
-		Path:     "/static/search.html",
-		FileMode: 0x1b6,
-		Mtime:    time.Unix(1578542049, 1578542049103634100),
-		Data:     []byte(_Assets66d3a3aad4d8bedc2fbcda627368d58b800ec039),
-	}, "/": &assets.File{
+	"/": &assets.File{
 		Path:     "/",
 		FileMode: 0x800001ff,
-		Mtime:    time.Unix(1578542071, 1578542071381134300),
+		Mtime:    time.Unix(1578542131, 1578542131493674500),
 		Data:     nil,
 	}, "/static": &assets.File{
 		Path:     "/static",
 		FileMode: 0x800001ff,
 		Mtime:    time.Unix(1578542049, 1578542049104610700),
 		Data:     nil,
+	}, "/static/search.html": &assets.File{
+		Path:     "/static/search.html",
+		FileMode: 0x1b6,
+		Mtime:    time.Unix(1578542049, 1578542049103634100),
+		Data:     []byte(_Assets66d3a3aad4d8bedc2fbcda627368d58b800ec039),
 	}}, "")
