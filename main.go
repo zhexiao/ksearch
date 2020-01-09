@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zhexiao/ksearch/search"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -48,7 +47,5 @@ func main() {
 		c.JSON(http.StatusOK, ks.Data)
 	})
 
-	if err := router.Run(":18888"); err != nil {
-		log.Printf("运行出错,err=%s.", err)
-	}
+	_ = router.Run(":18888")
 }
