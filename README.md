@@ -4,7 +4,7 @@
 ## 使用方式
 
 #### 第一步：下载windows程序
-ksearch.exe(https://github.com/zhexiao/ksearch/releases/download/v1/ksearch.exe)
+ksearch.exe(https://github.com/zhexiao/ksearch/releases/download/v2/ksearch.exe)
 
 #### 第二步：双击程序，打开程序
 ![image](https://raw.githubusercontent.com/zhexiao/ksearch/master/_example/3.png)
