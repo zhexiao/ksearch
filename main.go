@@ -3,8 +3,11 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zhexiao/ksearch/search"
+	"html/template"
+	"io/ioutil"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -14,11 +17,14 @@ func main() {
 	//ks.Keyword = "光谷东"
 
 	router := gin.Default()
+
+	t, _ := loadTemplate()
+	router.SetHTMLTemplate(t)
+
 	router.Static("/static", "./static")
-	router.LoadHTMLGlob("templates/*")
 
 	router.GET("", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "search.html", gin.H{})
+		c.HTML(http.StatusOK, "/templates/search.html", gin.H{})
 	})
 	router.POST("/search", func(c *gin.Context) {
 		url1 := c.PostForm("url1")
@@ -48,4 +54,24 @@ func main() {
 	})
 
 	_ = router.Run(":18888")
+}
+
+//把templates到go文件，参考如下
+//https://github.com/gin-gonic/examples/tree/master/assets-in-binary
+func loadTemplate() (*template.Template, error) {
+	t := template.New("")
+	for name, file := range Assets.Files {
+		if file.IsDir() || !strings.HasSuffix(name, ".html") {
+			continue
+		}
+		h, err := ioutil.ReadAll(file)
+		if err != nil {
+			return nil, err
+		}
+		t, err = t.New(name).Parse(string(h))
+		if err != nil {
+			return nil, err
+		}
+	}
+	return t, nil
 }
