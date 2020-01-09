@@ -1,4 +1,4 @@
-package search
+package main
 
 type KsError struct {
 	ErrorCode int    `json:"error_code"`
