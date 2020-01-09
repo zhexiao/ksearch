@@ -1,8 +1,8 @@
 package search
 
 type KsError struct {
-	ErrorCode int
-	ErrorMsg  string
+	ErrorCode int    `json:"error_code"`
+	ErrorMsg  string `json:"error_msg"`
 }
 
 func NewKsError(code int, msg string) *KsError {

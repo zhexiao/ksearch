@@ -41,13 +41,14 @@ func main() {
 
 		//搜索
 		if err := ks.Search(); err != nil {
-			log.Panicln(err)
+			c.JSON(http.StatusOK, err)
+			return
 		}
 
 		c.JSON(http.StatusOK, ks.Data)
 	})
 
-	if err := router.Run(":8080"); err != nil {
+	if err := router.Run(":18888"); err != nil {
 		log.Printf("运行出错,err=%s.", err)
 	}
 }

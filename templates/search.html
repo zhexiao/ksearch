@@ -144,13 +144,17 @@
             }).done(function (res) {
                 $('.resp').html("");
 
-                if (res == null) {
-                    $('.resp').append("暂无数据")
-                } else {
-                    for (var i = 0; i < res.length; i++) {
-                        n = i + 1;
-                        resData = "<a class='list-group-item' href='" + res[i]["url"] + "' target='_blank'>" + n + ". " + res[i]["title"] + "</a>";
-                        $('.resp').append(resData)
+                if ("error_code" in res){
+                    $('.resp').append(res["error_msg"])
+                }else{
+                    if (res == null) {
+                        $('.resp').append("暂无数据")
+                    } else {
+                        for (var i = 0; i < res.length; i++) {
+                            n = i + 1;
+                            resData = "<a class='list-group-item' href='" + res[i]["url"] + "' target='_blank'>" + n + ". " + res[i]["title"] + "</a>";
+                            $('.resp').append(resData)
+                        }
                     }
                 }
             });
