@@ -20,11 +20,10 @@ func main() {
 
 	t, _ := loadTemplate()
 	router.SetHTMLTemplate(t)
-
 	router.Static("/static", "./static")
 
 	router.GET("", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "/templates/search.html", gin.H{})
+		c.HTML(http.StatusOK, "/static/search.html", gin.H{})
 	})
 	router.POST("/search", func(c *gin.Context) {
 		url1 := c.PostForm("url1")
@@ -64,6 +63,7 @@ func loadTemplate() (*template.Template, error) {
 		if file.IsDir() || !strings.HasSuffix(name, ".html") {
 			continue
 		}
+
 		h, err := ioutil.ReadAll(file)
 		if err != nil {
 			return nil, err
