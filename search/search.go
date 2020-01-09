@@ -155,7 +155,7 @@ func (k *CT_Ksearch) validateParams() error {
 	}
 
 	if k.EndPage <= 0 {
-		k.EndPage = 1
+		k.EndPage = 2
 	}
 
 	if k.EndPage < k.StartPage {
