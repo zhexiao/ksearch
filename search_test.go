@@ -38,6 +38,20 @@ func TestReadUrlTmp(t *testing.T) {
 	if strings.Compare(tmp, "http://www.deyi.com/forum-912-%d.html") != 0 {
 		t.Errorf("模板匹配失败=%s.", tmp)
 	}
+
+	ks.Page2Url = "abc.com"
+	ks.Page3Url = "bcd.com"
+	tmp, err = ks.readUrlTmp()
+	if err == nil {
+		t.Errorf("数据检验失败 err=%s.", err)
+	}
+
+	ks.Page2Url = "abcd.com"
+	ks.Page3Url = "abcdefg.com"
+	tmp, err = ks.readUrlTmp()
+	if err == nil {
+		t.Errorf("数据检验失败 err=%s.", err)
+	}
 }
 
 func TestValidateParams(t *testing.T) {
