@@ -18,5 +18,27 @@ ksearch.exe(https://github.com/zhexiao/ksearch/releases/download/v2/ksearch.exe)
 #### 第五步：开始搜索
 ![image](https://raw.githubusercontent.com/zhexiao/ksearch/master/_example/2.png)
 
+# 源码编译
+#### 需求
+1. Go >= 1.13
 
+#### 开启go mod
+
+```
+根据实际情况填写路径
+$ go env -w GOPATH=/goproj
+$ go env -w GOBIN=/goproj/bin
+$ go env -w GO111MODULE=on
+$ go env -w GOPROXY=https://goproxy.cn,direct 
+```
+
+#### 拉库
+```
+$ go mod download
+```
+
+#### 运行
+```
+$ go run main.go
+```
 
