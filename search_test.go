@@ -17,6 +17,18 @@ func initData() *CT_Ksearch {
 	return &ks
 }
 
+func initData1() *CT_Ksearch {
+	ks := CT_Ksearch{
+		Page2Url:  "http://gaoloumi.cc/forum.php?mod=forumdisplay&fid=40&page=2",
+		Page3Url:  "http://gaoloumi.cc/forum.php?mod=forumdisplay&fid=40&page=3",
+		StartPage: 1,
+		EndPage:   2,
+		Keyword:   "武汉",
+	}
+
+	return &ks
+}
+
 func TestReadUrlTmp(t *testing.T) {
 	ks := initData()
 	tmp, err := ks.readUrlTmp()
@@ -58,5 +70,33 @@ func TestSearch(t *testing.T) {
 
 	if len(ks.Data) <= 0 {
 		t.Errorf("没有搜索到数据，有疑问 err=%s.", ks.Keyword)
+	}
+}
+
+func TestUriAddDomain(t *testing.T) {
+	respUrl := "forum.php?mod=viewthread&tid=885674&extra=page%3D1"
+
+	ks := initData1()
+	realLink, err := ks.fillLink(respUrl)
+	if err != nil {
+		t.Errorf("参数验证失败 err=%s.", err)
+	}
+
+	if strings.Compare(respUrl, realLink) == 0 {
+		t.Errorf("地址应该被转换，请检查")
+	}
+}
+
+func TestUriNotAddDomain(t *testing.T) {
+	respUrl := "http://www.deyi.com/thread-10363276-1-1.html"
+
+	ks := initData()
+	realLink, err := ks.fillLink(respUrl)
+	if err != nil {
+		t.Errorf("参数验证失败 err=%s.", err)
+	}
+
+	if strings.Compare(respUrl, realLink) != 0 {
+		t.Errorf("地址不应该被转换，请检查")
 	}
 }

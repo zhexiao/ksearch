@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"log"
+	"net/url"
 	"strings"
 	"sync"
 )
@@ -115,8 +116,15 @@ func (k *CT_Ksearch) readUrlData(url string) error {
 		link := e.Attr("href")
 		text := strings.Trim(e.Text, " ")
 
+		//填充访问地址,如果缺少domain,则补上domain
+		realLink, err := k.fillLink(link)
+		if err != nil {
+			log.Printf("地址补充有错误, err=%s", err)
+			return
+		}
+
 		//保存数据
-		k.saveData(link, text)
+		k.saveData(realLink, text)
 	})
 
 	//请求数据
@@ -179,4 +187,26 @@ func (k *CT_Ksearch) validateParams() error {
 	}
 
 	return nil
+}
+
+//填充访问地址,如果缺少domain,则补上domain
+func (k *CT_Ksearch) fillLink(link string) (string, error) {
+	urlInfo, err := url.Parse(k.Page2Url)
+	if err != nil {
+		return "", NewKsError(3, fmt.Sprintf("URL解析失败 err=%s", err))
+	}
+
+	host := urlInfo.Host
+	if strings.Contains(link, host) {
+		return link, nil
+	}
+
+	linkInfo, err := url.Parse(link)
+	if err != nil {
+		return "", NewKsError(3, fmt.Sprintf("URL解析失败 err=%s", err))
+	}
+
+	realLink := fmt.Sprintf("%s://%s/%s?%s", urlInfo.Scheme, host, linkInfo.Path, linkInfo.RawQuery)
+
+	return realLink, nil
 }
