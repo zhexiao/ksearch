@@ -4,6 +4,9 @@ language:
 go:
   - "1.13"
 
+before_install:
+  - go mod download
+
 script:
   - go test -v
 
