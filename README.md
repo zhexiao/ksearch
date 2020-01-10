@@ -3,6 +3,7 @@
 
 [![Build Status](https://travis-ci.org/zhexiao/ksearch.svg?branch=master)](https://travis-ci.org/zhexiao/ksearch)
 [![codecov](https://codecov.io/gh/zhexiao/ksearch/branch/master/graph/badge.svg)](https://codecov.io/gh/zhexiao/ksearch)
+![go](https://img.shields.io/badge/go->%3D1.13-blue)
 
 ## 使用方式
 
