@@ -2,6 +2,7 @@
 按页数对网站进行关键字搜索，避免在有些网站搜索数据的时候需要登录或相应的权限。
 
 [![Build Status](https://travis-ci.org/zhexiao/ksearch.svg?branch=master)](https://travis-ci.org/zhexiao/ksearch)
+[![codecov](https://codecov.io/gh/zhexiao/ksearch/branch/master/graph/badge.svg)](https://codecov.io/gh/zhexiao/ksearch)
 
 ## 使用方式
 
