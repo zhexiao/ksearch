@@ -6,3 +6,7 @@ go:
 
 script:
   - go test -v
+
+branches:
+  only:
+    - master
