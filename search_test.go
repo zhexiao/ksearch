@@ -57,6 +57,33 @@ func TestValidateParams(t *testing.T) {
 	if ks.StartPage != 1 || ks.EndPage != 2 {
 		t.Errorf("参数值初始化验证失败 err=%s.", err)
 	}
+
+	ks.StartPage = 2
+	ks.EndPage = 1
+	err = ks.validateParams()
+	if err == nil {
+		t.Errorf("参数验证失败 err=%s.", err)
+	}
+
+	ks.StartPage = 2
+	ks.EndPage = 100
+	err = ks.validateParams()
+	if err == nil {
+		t.Errorf("参数验证失败 err=%s.", err)
+	}
+
+	ks.Page2Url = ""
+	ks.Page3Url = ""
+	err = ks.validateParams()
+	if err == nil {
+		t.Errorf("参数验证失败 err=%s.", err)
+	}
+
+	ks.Keyword = ""
+	err = ks.validateParams()
+	if err == nil {
+		t.Errorf("参数验证失败 err=%s.", err)
+	}
 }
 
 func TestReadUrlData(t *testing.T) {
@@ -109,4 +136,10 @@ func TestUriNotAddDomain(t *testing.T) {
 	if strings.Compare(respUrl, realLink) != 0 {
 		t.Errorf("地址不应该被转换，请检查")
 	}
+}
+
+func TestKsearchData(t *testing.T) {
+	dt := NewCT_KSearchData()
+	dt.Url = ""
+	dt.Title = ""
 }
