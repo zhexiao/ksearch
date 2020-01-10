@@ -18,15 +18,14 @@ func initData() *CT_Ksearch {
 }
 
 func initData1() *CT_Ksearch {
-	ks := CT_Ksearch{
-		Page2Url:  "http://gaoloumi.cc/forum.php?mod=forumdisplay&fid=40&page=2",
-		Page3Url:  "http://gaoloumi.cc/forum.php?mod=forumdisplay&fid=40&page=3",
-		StartPage: 1,
-		EndPage:   2,
-		Keyword:   "武汉",
-	}
+	ks := NewCT_Ksearch()
+	ks.Page2Url = "http://gaoloumi.cc/forum.php?mod=forumdisplay&fid=40&page=2"
+	ks.Page3Url = "http://gaoloumi.cc/forum.php?mod=forumdisplay&fid=40&page=3"
+	ks.StartPage = 1
+	ks.EndPage = 2
+	ks.Keyword = "武汉"
 
-	return &ks
+	return ks
 }
 
 func TestReadUrlTmp(t *testing.T) {
@@ -46,6 +45,17 @@ func TestValidateParams(t *testing.T) {
 	err := ks.validateParams()
 	if err != nil {
 		t.Errorf("参数验证失败 err=%s.", err)
+	}
+
+	ks.StartPage = 0
+	ks.EndPage = 0
+	err = ks.validateParams()
+	if err != nil {
+		t.Errorf("参数验证失败 err=%s.", err)
+	}
+
+	if ks.StartPage != 1 || ks.EndPage != 2 {
+		t.Errorf("参数值初始化验证失败 err=%s.", err)
 	}
 }
 
