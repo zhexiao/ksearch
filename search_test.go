@@ -86,15 +86,17 @@ func TestValidateParams(t *testing.T) {
 		t.Errorf("参数验证失败 err=%s.", err)
 	}
 
-	ks.Page2Url = ""
-	ks.Page3Url = ""
-	err = ks.validateParams()
+	ks1 := initData()
+	ks1.Page2Url = ""
+	ks1.Page3Url = ""
+	err = ks1.validateParams()
 	if err == nil {
 		t.Errorf("参数验证失败 err=%s.", err)
 	}
 
-	ks.Keyword = ""
-	err = ks.validateParams()
+	ks2 := initData()
+	ks2.Keyword = ""
+	err = ks2.validateParams()
 	if err == nil {
 		t.Errorf("参数验证失败 err=%s.", err)
 	}
